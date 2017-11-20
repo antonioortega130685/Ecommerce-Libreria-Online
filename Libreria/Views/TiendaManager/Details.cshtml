@@ -1,0 +1,40 @@
+﻿@model Libreria.Models.Ejemplar
+
+@{
+    ViewBag.Title = "Detalles";
+}
+
+<h2>Listado de Detalles</h2>
+
+<fieldset>
+    <legend>Ejemplares</legend>
+
+    <div class="display-label">Genero</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Genero.Nombre)
+    </div>
+
+    <div class="display-label">Autor</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Autor.Nombre)
+    </div>
+
+    <div class="display-label">Titulo</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Titulo)
+    </div>
+
+    <div class="display-label">Precio</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Precio)
+    </div>
+
+    <div class="display-label">Arte de Tapa</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.ArtedetapaEjemplar)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Editar", "Edit", new { id = Model.EjemplarId }) |
+    @Html.ActionLink("Regresar al listado", "Index")
+</p>

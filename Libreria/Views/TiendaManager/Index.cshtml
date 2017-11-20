@@ -1,0 +1,87 @@
+﻿@model PagedList.IPagedList<Libreria.Models.Ejemplar>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+@helper Truncate(string input, int length)
+{
+if (input.Length <= length)
+{
+        @input
+}
+else
+{
+        @input.Substring(0, length)<text>...</text>
+}
+}
+
+@{
+    ViewBag.Title = "Panel de Administrador";
+}
+
+<h2>Listado de ejemplares</h2>
+
+<br/>
+
+
+
+
+<td>
+    @Html.ActionLink("Crear ejemplar", "Create") |
+    @Html.ActionLink("Crear Genero", "CreateGenero") |
+    @Html.ActionLink("Crear Autor", "CreateAutor")
+</td>
+
+@using (Html.BeginForm("Index", "TiendaManager", FormMethod.Get))
+{
+    <p>
+        Encontrar por nombre: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+        <input type="submit" value="Buscar" />
+    </p>
+}
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.ActionLink("Genero", "Index", new { sortOrder = ViewBag.NameSortParm })
+        </th>
+        <th>
+            @Html.ActionLink("Autor", "Index", new { sortOrder = ViewBag.NameSortParm })
+        </th>
+        <th>
+            @Html.ActionLink("Titulo", "Index", new { sortOrder = ViewBag.NameSortParm })
+        </th>
+        <th>
+            Precio
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Genero.Nombre)
+            </td>
+            <td>
+                @Truncate(item.Autor.Nombre, 25)
+            </td>
+            <td>
+                @Truncate(item.Titulo, 25)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Precio)
+            </td>
+            <td>
+                @Html.ActionLink("Editar", "Edit", new { id = item.EjemplarId }) |
+                @Html.ActionLink("Detalles", "Details", new { id = item.EjemplarId }) |
+                @Html.ActionLink("Borrar", "Delete", new { id = item.EjemplarId })
+            </td>
+        </tr>
+    }
+
+</table>
+
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("Index",
+    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))

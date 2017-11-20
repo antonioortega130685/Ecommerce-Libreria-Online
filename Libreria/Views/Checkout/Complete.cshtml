@@ -1,0 +1,18 @@
+﻿@model int
+
+@{
+    ViewBag.Title = "Pago completado";
+}
+
+<h2>Tu pago ha sido completado</h2>
+
+<br/>
+
+<p>¡Gracias por tu compra! Tu número de orden es: @Model</p>
+
+<p>Tu orden te va a llegar entre 5 y 7 días hábiles.</p>
+
+<p>
+    ¿Ganas de ordenar más libros?
+    @Html.ActionLink("Click acá", "Index", "Home")
+</p>

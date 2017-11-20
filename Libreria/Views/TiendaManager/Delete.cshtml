@@ -1,0 +1,23 @@
+﻿@model Libreria.Models.Ejemplar
+
+@{
+    ViewBag.Title = "Eliminar";
+}
+
+<h2>Confirmar eliminación</h2>
+
+<p>
+    ¿Seguro/a que deseas borrar el ejemplar titulado
+    <strong>@Model.Titulo</strong>?
+</p>
+
+@using (Html.BeginForm())
+{
+    <p>
+        <input type="submit" value="Borrar" />
+    </p>
+    <p>
+        @Html.ActionLink("Regresar al listado", "Index")
+    </p>
+
+}

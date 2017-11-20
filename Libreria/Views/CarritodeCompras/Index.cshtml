@@ -1,0 +1,136 @@
+﻿@model Libreria.ViewModels.ShoppingCartViewModel
+@{
+    ViewBag.Title = "Carrito";
+}
+<script src="~/Scripts/jquery-1.10.2.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+    $(function () {
+        // Document.ready -> link up remove event handler
+        $(".RemoveLink").click(function () {
+            // Get the id from the link
+            var recordToDelete = $(this).attr("data-id");
+
+            if (recordToDelete != '') {
+
+                // Perform the ajax post
+                $.post("/CarritodeCompras/RemoveFromCart", { "id": recordToDelete },
+                    function (data) {
+                        // Successful requests get here
+                        // Update the page elements
+                        if (data.ItemCount == 0) {
+                            $('#row-' + data.DeleteId).fadeOut('slow');
+                        } else {
+                            $('#item-count-' + data.DeleteId).text(data.ItemCount);
+                        }
+
+                        $('#cart-total').text(data.CartTotal);
+                        $('#update-message').text(data.Message);
+                        $('#cart-status').text('Cart (' + data.CartCount + ')');
+                    });
+            }
+        });
+    });
+
+    //function MostrarDetalle() {
+    //    //Funcion que se encarga de poner la lista de detalles dentro del div VentaDetalle
+    //    $.ajax({
+    //        url: "/CarritodeCompras/Index",
+    //        type: "post",
+    //        cache: false,
+    //        success: function (retorno) {
+    //            //el metodo Detalles del controller Ventas, nos retorna una pagina Html en el parametro "retorno"
+    //            //esta la ponemos dentro del div
+    //            $("#ShoppingCartViewModel").html(retorno);
+    //        },
+    //        error: function (retorno) {
+    //            alert("Se ha producido un error");
+    //        }
+    //    })
+    //}
+
+    //function Eliminar(item) {
+    //    $.ajax({
+    //        url: "/CarritodeCompras/RemoveFromCart",
+    //        data: { 'Id': item },
+    //        type: "post",
+    //        cache: false,
+    //        success: function (retorno) {
+    //            $("#cart-status").html(retorno);
+    //        },
+    //        error: function (retorno) {
+    //            alert("Se ha producido un error");
+    //        }
+    //    })
+    //}
+
+
+    function handleUpdate() {
+        // Load and deserialize the returned JSON data
+        var json = context.get_data();
+        var data = json_parse(json, [reviver]);
+
+        // Update the page elements
+        if (data.ItemCount == 0) {
+            $('#row-' + data.DeleteId).fadeOut('slow');
+        } else {
+            $('#item-count-' + data.DeleteId).text(data.ItemCount);
+        }
+
+        $('#cart-total').text(data.CartTotal);
+        $('#update-message').text(data.Message);
+        $('#cart-status').text('Carrito (' + data.CartCount + ')');
+    }
+</script>
+<h3>
+    <em>Revisa</em> tu carrito:
+</h3>
+<p class="button">
+    @Html.ActionLink("Comprar >>", "AddressAndPayment", "Checkout")
+</p>
+<div id="update-message">
+</div>
+<table class="table">
+    <tr>
+        <th>
+            Nombre de ejemplar
+        </th>
+        <th>
+            Precio (c/u)
+        </th>
+        <th>
+            Cantidad
+        </th>
+        <th></th>
+    </tr>
+    @foreach (var item in Model.CartItems)
+    {
+        <tr id="row-@item.ArticuloId">
+            <td>
+                @Html.ActionLink(item.Ejemplar.Titulo, "Details", "Tienda", new { id = item.EjemplarId }, null)
+            </td>
+            <td>
+                @item.Ejemplar.Precio
+            </td>
+            <td id="item-count-@item.ArticuloId">
+                @item.Conteo
+            </td>
+            <td>
+                <a href="#" class="RemoveLink" data-id="@item.ArticuloId">Remover del carrito</a>
+            </td>
+            @*<td>
+                <input type="button" onclick="Eliminar(@item.ArticuloId)" value="X" />
+            </td>*@
+            
+        </tr>
+    }
+    <tr>
+        <td>
+            Total
+        </td>
+        <td></td>
+        <td></td>
+        <td id="cart-total">
+            @Model.CartTotal
+        </td>
+    </tr>
+</table>

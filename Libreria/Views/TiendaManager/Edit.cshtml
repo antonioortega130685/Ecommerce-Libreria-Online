@@ -1,0 +1,68 @@
+﻿@model Libreria.Models.Ejemplar
+
+@{
+    ViewBag.Title = "Editar";
+}
+
+<h2>Editar ejemplar</h2>
+
+<script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(true)
+    <fieldset>
+        <legend>Listado de campos</legend>
+
+        @Html.HiddenFor(model => model.EjemplarId)
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.GeneroId, "Genero")
+        </div>
+        <div class="editor-field">
+            @Html.DropDownList("GeneroId", String.Empty)
+            @Html.ValidationMessageFor(model => model.GeneroId)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.AutorId, "Autor")
+        </div>
+        <div class="editor-field">
+            @Html.DropDownList("AutorId", String.Empty)
+            @Html.ValidationMessageFor(model => model.AutorId)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Titulo)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Titulo)
+            @Html.ValidationMessageFor(model => model.Titulo)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Precio)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Precio)
+            @Html.ValidationMessageFor(model => model.Precio)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.ArtedetapaEjemplar)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.ArtedetapaEjemplar)
+            @Html.ValidationMessageFor(model => model.ArtedetapaEjemplar)
+        </div>
+
+        <p>
+            <input type="submit" value="Guardar" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Regresar al listado", "Index")
+</div>

@@ -1,0 +1,30 @@
+﻿@model IEnumerable<Libreria.Models.Genero>
+
+@{
+    ViewBag.Title = "Tienda";
+}
+<br />
+
+
+<div id="MainContainer" class="container">
+    <br />
+    <h2>Navega por géneros</h2>
+    <br />
+    <p>
+        Elegí de @Model.Count() géneros:
+    </p>
+    <br />
+
+    <ul>
+        @foreach (var genero in Model)
+        {
+            <li>@Html.ActionLink(genero.Nombre, "Browse", new { genero = genero.Nombre })</li>
+        }
+    </ul>
+    
+</div>
+
+
+
+
+

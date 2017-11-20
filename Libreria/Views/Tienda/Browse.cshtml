@@ -1,0 +1,21 @@
+﻿@model Libreria.Models.Genero
+
+@{
+    ViewBag.Title = "Navegar";
+}
+
+<div class="genre">
+    <h3><em>@Model.Nombre</em> Ejemplares</h3>
+
+    <ul id="album-list">
+        @foreach (var ejemplar in Model.Ejemplares)
+        {
+            <li style="text-decoration:none;">
+                <a href="@Url.Action("Details", new { id = ejemplar.EjemplarId })">
+                    <img alt="@ejemplar.Titulo" src="@ejemplar.ArtedetapaEjemplar" height="100" width="75" class="img-rounded"/>
+                    <span>@ejemplar.Titulo</span>
+                </a>
+            </li>
+        }
+    </ul>
+</div>

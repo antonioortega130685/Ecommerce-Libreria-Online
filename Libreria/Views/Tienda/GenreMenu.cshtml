@@ -1,0 +1,12 @@
+﻿@model IEnumerable<Libreria.Models.Genero>
+
+<ul id="categories">
+    @foreach (var genero in Model)
+    {
+        <li>
+            @Html.ActionLink(genero.Nombre,
+                "Browse", "Store",
+                new { Genero = genero.Nombre }, null)
+    </li>
+    }
+</ul>

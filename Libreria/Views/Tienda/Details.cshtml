@@ -1,0 +1,30 @@
+﻿@model Libreria.Models.Ejemplar
+
+@{
+    ViewBag.Title = "Ejemplar - " + Model.Titulo;
+}
+
+<h2>@Model.Titulo</h2>
+
+<p>
+    <img alt="@Model.Titulo" src="@Model.ArtedetapaEjemplar" height="300" width="225" class="img-rounded"/>
+</p>
+
+<div id="album-details">
+    <p>
+        <em>Genero:</em>
+        @Model.Genero.Nombre
+    </p>
+    <p>
+        <em>Autor:</em>
+        @Model.Autor.Nombre
+    </p>
+    <p>
+        <em>Precio:</em>
+        @String.Format("{0:F}", Model.Precio)
+    </p>
+    <p class="button">
+        @Html.ActionLink("Agregar al carrito", "AddToCart",
+        "CarritodeCompras", new { id = Model.EjemplarId }, "")
+    </p>
+</div>
